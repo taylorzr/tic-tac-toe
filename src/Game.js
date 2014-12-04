@@ -6,7 +6,7 @@ function Game() {
 }
 
 Game.prototype.mark = function(symbol, cell) {
-  this.board[cell - 1] = symbol;
+  this.board[cell - 1] = symbol; // 1 indexed
 }
 
 Game.prototype.bestCellFor = function(symbol) {

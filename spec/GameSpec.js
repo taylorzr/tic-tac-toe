@@ -24,6 +24,10 @@ describe("Game", function() {
     it ("should return the middle cell if the board is empty", function() {
       expect(game.bestCellFor("x")).toEqual(4);
     });
+    
+    // Add more tests!!!
+    // It should block the opponent from winning
+    // It should be the winning cell
   });
 
   describe("#openRatingFor", function() {
