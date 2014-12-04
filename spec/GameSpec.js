@@ -26,6 +26,34 @@ describe("Game", function() {
     });
   });
 
+  describe("#openRatingFor", function() {
+    it ("should return 4 for the center cell on an empty board", function() {
+      expect(game.openRatingFor("x", 4)).toEqual(4);
+    });
+
+    it ("should return 0 for the center cell full blocked", function() {
+      game.mark("o", 4);
+      game.mark("o", 8);
+      game.mark("o", 1);
+      game.mark("o", 3);
+      expect(game.openRatingFor("x", 4)).toEqual(0);
+    });
+  });
+
+  describe("#blockRatingFor", function() {
+    it ("should return 4 for the center cell blocking horizontal, vertical and diagonals", function() {
+      game.mark("o", 4);
+      game.mark("o", 8);
+      game.mark("o", 1);
+      game.mark("o", 3);
+      expect(game.blockRatingFor("x", 4)).toEqual(4);
+    });
+
+    it ("should return 0 for an empty board", function() {
+      expect(game.blockRatingFor("x", 4)).toEqual(0);
+    });
+  });
+
   describe("#rowBlockFor", function() {
     it ("should return 1 when the row has an opponent value", function() {
       game.mark("o", 3);

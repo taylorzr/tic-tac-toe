@@ -11,13 +11,17 @@ Game.prototype.mark = function(symbol, cell) {
 
 Game.prototype.bestCellFor = function(symbol) {
   var ratings = this.board.map(function(_, cellIndex) {
-    var rating = 0;
-    if (this.rowOpenFor(symbol, cellIndex)) rating += 1;
-    if (this.columnOpenFor(symbol, cellIndex)) rating += 1;
-    rating += this.diagonalsOpenFor(symbol, cellIndex);
-    return rating;
+    return this.openRatingFor(symbol, cellIndex) + this.blockRatingFor(symbol, cellIndex);
   }, this);
   return ratings.indexOf(Math.max.apply(null, ratings));
+}
+
+Game.prototype.openRatingFor = function(symbol, cellIndex) {
+  return this.rowOpenFor(symbol, cellIndex) + this.columnOpenFor(symbol, cellIndex) + this.diagonalsOpenFor(symbol, cellIndex);
+}
+
+Game.prototype.blockRatingFor = function(symbol, cellIndex) {
+  return this.rowBlockFor(symbol, cellIndex) + this.columnBlockFor(symbol, cellIndex) + this.diagonalsBlockFor(symbol, cellIndex);
 }
 
 Game.prototype.rowBlockFor = function(symbol, cellIndex) {
