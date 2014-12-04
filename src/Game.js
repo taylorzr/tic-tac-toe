@@ -20,6 +20,32 @@ Game.prototype.bestCellFor = function(symbol) {
   return ratings.indexOf(Math.max.apply(null, ratings));
 }
 
+Game.prototype.rowBlockFor = function(symbol, cellIndex) {
+  return this.rowForCell(cellIndex).some(function(cellValue) {
+    return cellValue != symbol && cellValue != null;
+  });
+}
+
+Game.prototype.columnBlockFor = function(symbol, cellIndex) {
+  return this.columnForCell(cellIndex).some(function(cellValue) {
+    return cellValue != symbol && cellValue != null;
+  });
+}
+
+Game.prototype.diagonalsBlockFor = function(symbol, cellIndex) {
+  if (!this.cellOnDiagonal(cellIndex)) return 0; 
+  
+  var diagonalsValues = this.diagonalsForCell(cellIndex);
+  return diagonalsValues.reduce(function(count, diagonalValues) {
+    if (diagonalValues == null) return count;
+    var diagonalBlock = diagonalValues.some(function(cellValue) {
+      return cellValue != symbol && cellValue != null;
+    });
+    if (diagonalBlock) count += 1;
+    return count;
+  }, 0);
+}
+
 Game.prototype.rowOpenFor = function(symbol, cellIndex) {
   return this.rowForCell(cellIndex).every(function(cellValue) {
     return cellValue == symbol || cellValue == null; 

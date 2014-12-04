@@ -26,6 +26,46 @@ describe("Game", function() {
     });
   });
 
+  describe("#rowBlockFor", function() {
+    it ("should return true when the row has an opponent value", function() {
+      game.mark("o", 3);
+      expect(game.rowBlockFor("x", 0)).toBeTruthy();
+    });
+
+    it ("should return false when the row has no opponent values", function() {
+      expect(game.rowBlockFor("x", 0)).toBeFalsy();
+    });
+  });
+
+  describe("#columnBlockFor", function() {
+    it ("should return true when the row has an opponent value", function() {
+      game.mark("o", 7);
+      expect(game.columnBlockFor("x", 0)).toBeTruthy();
+    });
+
+    it ("should return false when the column has no opponent values", function() {
+      expect(game.columnBlockFor("x", 0)).toBeFalsy();
+    });
+  });
+
+  describe("#diagonalsBlockFor", function() {
+    it ("should return 2 when the diagonal has an opponent value", function() {
+      game.mark("o", 1);
+      game.mark("o", 3);
+      expect(game.diagonalsBlockFor("x", 4)).toEqual(2);
+    });
+
+    it ("should return 1 when the 1 diagonal \\ is blocked for the opponent", function() {
+      game.mark("o", 1);
+      expect(game.diagonalsBlockFor("x", 4)).toEqual(1);
+    });
+
+    it ("should return 0 when the diagonals has no opponent values", function() {
+      expect(game.diagonalsBlockFor("x", 0)).toEqual(0);
+    });
+  });
+
+
   describe("#rowOpenFor", function() {
     it ("should return true when the row has no opponent values", function() {
       game.mark("x", 3);
