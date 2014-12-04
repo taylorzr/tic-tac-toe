@@ -21,15 +21,17 @@ Game.prototype.bestCellFor = function(symbol) {
 }
 
 Game.prototype.rowBlockFor = function(symbol, cellIndex) {
-  return this.rowForCell(cellIndex).some(function(cellValue) {
+  var blocked = this.rowForCell(cellIndex).some(function(cellValue) {
     return cellValue != symbol && cellValue != null;
   });
+  return blocked ? 1 : 0;
 }
 
 Game.prototype.columnBlockFor = function(symbol, cellIndex) {
-  return this.columnForCell(cellIndex).some(function(cellValue) {
+  var blocked = this.columnForCell(cellIndex).some(function(cellValue) {
     return cellValue != symbol && cellValue != null;
   });
+  return blocked ? 1 : 0;
 }
 
 Game.prototype.diagonalsBlockFor = function(symbol, cellIndex) {
@@ -47,15 +49,17 @@ Game.prototype.diagonalsBlockFor = function(symbol, cellIndex) {
 }
 
 Game.prototype.rowOpenFor = function(symbol, cellIndex) {
-  return this.rowForCell(cellIndex).every(function(cellValue) {
+  var open = this.rowForCell(cellIndex).every(function(cellValue) {
     return cellValue == symbol || cellValue == null; 
-  });
+  }); 
+  return open ? 1 : 0;
 }
 
 Game.prototype.columnOpenFor = function(symbol, cellIndex) {
-  return this.columnForCell(cellIndex).every(function(cellValue) {
+  var open = this.columnForCell(cellIndex).every(function(cellValue) {
     return cellValue == symbol || cellValue == null;
   });
+  return open ? 1 : 0;
 }
 
 Game.prototype.diagonalsOpenFor = function(symbol, cellIndex) {

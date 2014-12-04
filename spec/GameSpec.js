@@ -27,29 +27,29 @@ describe("Game", function() {
   });
 
   describe("#rowBlockFor", function() {
-    it ("should return true when the row has an opponent value", function() {
+    it ("should return 1 when the row has an opponent value", function() {
       game.mark("o", 3);
-      expect(game.rowBlockFor("x", 0)).toBeTruthy();
+      expect(game.rowBlockFor("x", 0)).toEqual(1);
     });
 
-    it ("should return false when the row has no opponent values", function() {
-      expect(game.rowBlockFor("x", 0)).toBeFalsy();
+    it ("should return 0 when the row has no opponent values", function() {
+      expect(game.rowBlockFor("x", 0)).toEqual(0);
     });
   });
 
   describe("#columnBlockFor", function() {
-    it ("should return true when the row has an opponent value", function() {
+    it ("should return 1 when the column has an opponent value", function() {
       game.mark("o", 7);
-      expect(game.columnBlockFor("x", 0)).toBeTruthy();
+      expect(game.columnBlockFor("x", 0)).toEqual(1);
     });
 
-    it ("should return false when the column has no opponent values", function() {
-      expect(game.columnBlockFor("x", 0)).toBeFalsy();
+    it ("should return 0 when the column has no opponent values", function() {
+      expect(game.columnBlockFor("x", 0)).toEqual(0);
     });
   });
 
   describe("#diagonalsBlockFor", function() {
-    it ("should return 2 when the diagonal has an opponent value", function() {
+    it ("should return 2 when the both diagonals are blocked for the opponent", function() {
       game.mark("o", 1);
       game.mark("o", 3);
       expect(game.diagonalsBlockFor("x", 4)).toEqual(2);
@@ -67,24 +67,24 @@ describe("Game", function() {
 
 
   describe("#rowOpenFor", function() {
-    it ("should return true when the row has no opponent values", function() {
+    it ("should return 1 when the row has no opponent values", function() {
       game.mark("x", 3);
-      expect(game.rowOpenFor("x", 0)).toBeTruthy();
+      expect(game.rowOpenFor("x", 0)).toEqual(1);
     });
 
-    it ("should return false when the row has opponent values", function() {
+    it ("should return 0 when the row has opponent values", function() {
       game.mark("o", 3);
-      expect(game.rowOpenFor("x", 0)).toBeFalsy();
+      expect(game.rowOpenFor("x", 0)).toEqual(0);
     });
   });
 
   describe("#columnOpenFor", function() {
-    it ("should return true when the column has no opponent values", function() {
+    it ("should return 1 when the column has no opponent values", function() {
       game.mark("x", 7);
       expect(game.columnOpenFor("x", 0)).toBeTruthy();
     });
 
-    it ("should return false when the column has opponent values", function() {
+    it ("should return 0 when the column has opponent values", function() {
       game.mark("o", 7);
       expect(game.columnOpenFor("x", 0)).toBeFalsy();
     });
