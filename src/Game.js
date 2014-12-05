@@ -5,12 +5,24 @@ function Game() {
   this.diagonal2 = [2, 4, 6];
 }
 
+// module.exports = Game;
+
+Game.prototype.show = function() {
+  var printableBoard = this.board.map(function(cellValue) {
+    return cellValue == null ? "-" : cellValue;
+  });
+  console.log(printableBoard.slice(0, 3));
+  console.log(printableBoard.slice(3, 6));
+  console.log(printableBoard.slice(6, 9));
+}
+
 Game.prototype.mark = function(symbol, cell) {
   this.board[cell - 1] = symbol; // 1 indexed
 }
 
 Game.prototype.bestCellFor = function(symbol) {
-  var ratings = this.board.map(function(_, cellIndex) {
+  var ratings = this.board.map(function(cellValue, cellIndex) {
+    if (cellValue != null) return null;
     return this.openRatingFor(symbol, cellIndex) + this.blockRatingFor(symbol, cellIndex);
   }, this);
   return ratings.indexOf(Math.max.apply(null, ratings));
@@ -25,17 +37,25 @@ Game.prototype.blockRatingFor = function(symbol, cellIndex) {
 }
 
 Game.prototype.rowBlockFor = function(symbol, cellIndex) {
-  var blocked = this.rowForCell(cellIndex).some(function(cellValue) {
-    return cellValue != symbol && cellValue != null;
+  var notAlreadyBlocked = this.rowForCell(cellIndex).every(function(cellValue){
+    return cellValue != symbol;
   });
-  return blocked ? 1 : 0;
+  var blockCount = this.rowForCell(cellIndex).reduce(function(count, cellValue) {
+    if (cellValue != symbol && cellValue != null) count += 1;
+    return count;
+  }, 0);
+  return notAlreadyBlocked ? blockCount : 0;
 }
 
 Game.prototype.columnBlockFor = function(symbol, cellIndex) {
-  var blocked = this.columnForCell(cellIndex).some(function(cellValue) {
-    return cellValue != symbol && cellValue != null;
+  var notAlreadyBlocked = this.columnForCell(cellIndex).every(function(cellValue){
+    return cellValue != symbol;
   });
-  return blocked ? 1 : 0;
+  var blockCount = this.columnForCell(cellIndex).reduce(function(count, cellValue) {
+    if (cellValue != symbol && cellValue != null) count += 1;
+    return count;
+  }, 0);
+  return notAlreadyBlocked ? blockCount : 0;
 }
 
 Game.prototype.diagonalsBlockFor = function(symbol, cellIndex) {
@@ -44,10 +64,13 @@ Game.prototype.diagonalsBlockFor = function(symbol, cellIndex) {
   var diagonalsValues = this.diagonalsForCell(cellIndex);
   return diagonalsValues.reduce(function(count, diagonalValues) {
     if (diagonalValues == null) return count;
-    var diagonalBlock = diagonalValues.some(function(cellValue) {
+    var notAlreadyBlocked = diagonalValues.every(function(cellValue){
+      return cellValue != symbol;
+    });
+    var blocks = diagonalValues.some(function(cellValue) {
       return cellValue != symbol && cellValue != null;
     });
-    if (diagonalBlock) count += 1;
+    if (notAlreadyBlocked && blocks) count += 1;
     return count;
   }, 0);
 }
