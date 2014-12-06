@@ -24,10 +24,25 @@ describe("Game", function() {
     it ("should return the middle cell if the board is empty", function() {
       expect(game.bestCellFor("x")).toEqual(4);
     });
-    
-    // Add more tests!!!
-    // It should block the opponent from winning
-    // It should be the winning cell
+
+    it ("should return the cell that wins the game", function() {
+      game.mark("x", 0);
+      game.mark("x", 1);
+      expect(game.bestCellFor("x")).toEqual(2);
+    });
+
+    it ("should return the cell that blocks losing the game", function() {
+      game.mark("o", 0);
+      game.mark("o", 1);
+      expect(game.bestCellFor("x")).toEqual(2);
+    });
+
+    it ("should return the cell that provides the greatest possiblilty for winning, and the least possibility for losing", function() {
+      game.mark("x", 0);
+      game.mark("o", 4);
+      game.mark("x", 8);
+      expect(game.bestCellFor("x")).toEqual(2);
+    });
   });
 
   describe("#openRatingFor", function() {
@@ -58,7 +73,6 @@ describe("Game", function() {
     });
   });
 
-  // should return 2 if blocks win
   describe("#rowBlockFor", function() {
     it ("should return 2 when the row has 2 opponent values", function() {
       game.mark("o", 1);
@@ -106,6 +120,14 @@ describe("Game", function() {
   });
 
   describe("#diagonalsBlockFor", function() {
+    it ("should return 4 when both diagonals contain 2 opponent values", function() {
+      game.mark("o", 0);
+      game.mark("o", 2);
+      game.mark("o", 6);
+      game.mark("o", 8);
+      expect(game.diagonalsBlockFor("x", 4)).toEqual(4);
+    });
+
     it ("should return 2 when the both diagonals are blocked for the opponent", function() {
       game.mark("o", 0);
       game.mark("o", 2);
@@ -124,6 +146,12 @@ describe("Game", function() {
 
 
   describe("#rowOpenFor", function() {
+    it ("should return 2 for a winning row", function() {
+      game.mark("x", 0);
+      game.mark("x", 1);
+      expect(game.rowOpenFor("x", 2)).toEqual(2);
+    });
+
     it ("should return 1 when the row has no opponent values", function() {
       game.mark("x", 2);
       expect(game.rowOpenFor("x", 0)).toEqual(1);
@@ -136,6 +164,12 @@ describe("Game", function() {
   });
 
   describe("#columnOpenFor", function() {
+    it ("should return 2 for a winning column", function() {
+      game.mark("x", 0);
+      game.mark("x", 3);
+      expect(game.columnOpenFor("x", 6)).toEqual(2);
+    });
+
     it ("should return 1 when the column has no opponent values", function() {
       game.mark("x", 6);
       expect(game.columnOpenFor("x", 0)).toBeTruthy();
@@ -148,6 +182,14 @@ describe("Game", function() {
   });
 
   describe("#diagonalsOpenFor", function() {
+    it ("should return 4 for a double-winning diagonal", function() {
+      game.mark("x", 0);
+      game.mark("x", 2);
+      game.mark("x", 6);
+      game.mark("x", 8);
+      expect(game.diagonalsOpenFor("x", 4)).toEqual(4);
+    });
+
     it ("should return 2 when the diagonals have no opponent values", function() {
       game.mark("x", 4);
       expect(game.diagonalsOpenFor("x", 4)).toEqual(2);
