@@ -5,8 +5,6 @@ function Game() {
   this.diagonal2 = [2, 4, 6];
 }
 
-// module.exports = Game;
-
 Game.prototype.show = function() {
   var printableBoard = this.board.map(function(cellValue) {
     return cellValue == null ? "-" : cellValue;
@@ -17,7 +15,7 @@ Game.prototype.show = function() {
 }
 
 Game.prototype.mark = function(symbol, cell) {
-  this.board[cell - 1] = symbol; // 1 indexed
+  this.board[cell] = symbol; // 1 indexed
 }
 
 Game.prototype.bestCellFor = function(symbol) {
