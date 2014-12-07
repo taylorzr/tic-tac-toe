@@ -23,11 +23,12 @@ Intelligence.prototype.lineBlockFor = function(symbol, lineValues) {
   var notAlreadyBlocked = lineValues.every(function(cellValue){
     return cellValue != symbol;
   });
-  var blockCount = lineValues.reduce(function(count, cellValue) {
+  var rating = lineValues.reduce(function(count, cellValue) {
     if (cellValue != symbol && cellValue != null) count += 1;
     return count;
   }, 0);
-  return notAlreadyBlocked ? blockCount : 0;
+  if (rating == 2) rating = 42; // weight blocking the win a little higher
+  return notAlreadyBlocked ? rating : 0;
 }
 
 Intelligence.prototype.rowBlockFor = function(symbol, cellIndex) {
@@ -50,17 +51,6 @@ Intelligence.prototype.diagonalsBlockFor = function(symbol, cellIndex) {
     count += that.lineBlockFor(symbol, diagonalValues);
     return count;
   }, 0);
-}
-
-Intelligence.prototype.lineBlockFor = function(symbol, lineValues) {
-  var notAlreadyBlocked = lineValues.every(function(cellValue){
-    return cellValue != symbol;
-  });
-  var blockCount = lineValues.reduce(function(count, cellValue) {
-    if (cellValue != symbol && cellValue != null) count += 1;
-    return count;
-  }, 0);
-  return notAlreadyBlocked ? blockCount : 0;
 }
 
 Intelligence.prototype.rowOpenFor = function(symbol, cellIndex) {
@@ -90,11 +80,12 @@ Intelligence.prototype.lineOpenFor = function(symbol, lineValues) {
   var lineOpen = lineValues.every(function(cellValue) {
     return cellValue == symbol || cellValue == null;
   });
-  var symbolCount = lineValues.reduce(function(count, cellValue) {
+  var rating = lineValues.reduce(function(count, cellValue) {
     if (cellValue == symbol) count += 1;
     return count;
   }, 0); 
-  return lineOpen ? (symbolCount || 1) : 0;
+  if (rating == 2) rating = 42; // weight winning a little higher
+  return lineOpen ? (rating || 1) : 0;
 }
 
 module.exports = Intelligence;

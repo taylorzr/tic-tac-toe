@@ -23,17 +23,16 @@ Game.prototype.playRound = function() {
   var input = readline.createInterface(process.stdin, process.stdout);
   input.setPrompt("Enter a cell to mark: ");
   input.prompt();
-  var that = this;
-  input.on("line", function(line) { 
-    that.board.mark("x", parseInt(line.trim()) - 1);
-    that.board.mark("o", that.intel.bestCellFor("o"));
+  input.on("line", function playRound(line) { 
+    this.board.mark("x", parseInt(line.trim()) - 1);
+    this.board.mark("o", this.intel.bestCellFor("o"));
     input.close();
-    that.play()
-  });
+    this.play()
+  }.bind(this));
 }
 
 Game.prototype.over = function() {
-  this.board.winner() || this.board.full();
+  return this.board.winner() || this.board.full();
 }
 
 game = new Game();

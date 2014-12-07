@@ -5,15 +5,6 @@ function Board() {
   this.diagonal2 = [2, 4, 6];
 }
 
-Board.prototype.show = function() {
-  var printableBoard = this.cells.map(function(cellValue) {
-    return cellValue == null ? "-" : cellValue;
-  });
-  console.log(printableBoard.slice(0, 3));
-  console.log(printableBoard.slice(3, 6));
-  console.log(printableBoard.slice(6, 9));
-}
-
 Board.prototype.mark = function(symbol, cell) {
   this.cells[cell] = symbol;
 }
@@ -52,6 +43,40 @@ Board.prototype.diagonalsForCell = function(cellIndex) {
 
 Board.prototype.cellOnDiagonal = function(cellIndex) {
   return cellIndex % 2 == 0;
+}
+
+Board.prototype.rows = function() {
+  var rows = [];
+  var rowLength = 3;
+  for (var i = 0, length = this.cells.length; i < length; i += rowLength) {
+    var row = symbols.slice(i, i + rowLength).join(" | ");
+    rows.push(row);
+  }
+  return rows
+}
+
+Board.prototype.columns = function() {
+  var columns = [];
+  var columnLength = 3;
+  for (var i = 0, length = this.cells.length; i < length; i += columnLength) {
+    var column = [i, i + 3, i + 6];
+    columns.push(column);
+  }
+  return columns;
+}
+
+Board.prototype.diagonals = function() {
+  var diagonal1 = this.diagonal1.map(function(cellIndex) {
+    return this.cells[cellIndex];
+  });
+  var diagonal2 = this.diagonal2.map(function(cellIndex) {
+    return this.cells[cellIndex];
+  });
+  return [diagonal1, diagonal2];
+}
+
+Board.prototype.lines = function() {
+  return this.rows() + this.columns() + this.diagonals();
 }
 
 Board.prototype.full = function() {
