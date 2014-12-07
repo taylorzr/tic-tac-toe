@@ -97,4 +97,4 @@ Intelligence.prototype.lineOpenFor = function(symbol, lineValues) {
   return lineOpen ? (symbolCount || 1) : 0;
 }
 
-module.export = Intelligence;
+module.exports = Intelligence;

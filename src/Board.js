@@ -54,4 +54,15 @@ Board.prototype.cellOnDiagonal = function(cellIndex) {
   return cellIndex % 2 == 0;
 }
 
+Board.prototype.full = function() {
+  return this.cells.every(function(cellValue) {
+    cellValue != null;
+  });
+}
+
+Board.prototype.winner = function() {
+  // Not implemented
+  return false;
+}
+
 module.exports = Board;
