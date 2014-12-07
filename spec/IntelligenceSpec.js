@@ -60,6 +60,67 @@ describe("Intelligence", function() {
     });
   });
 
+  describe("#rowOpenFor", function() {
+    it ("should return 42 for a winning row", function() {
+      board.mark("x", 0);
+      board.mark("x", 1);
+      expect(intel.rowOpenFor("x", 2)).toEqual(42);
+    });
+
+    it ("should return 1 when the row has no opponent values", function() {
+      board.mark("x", 2);
+      expect(intel.rowOpenFor("x", 0)).toEqual(1);
+    });
+
+    it ("should return 0 when the row has opponent values", function() {
+      board.mark("o", 2);
+      expect(intel.rowOpenFor("x", 0)).toEqual(0);
+    });
+  });
+
+  describe("#columnOpenFor", function() {
+    it ("should return 42 for a winning column", function() {
+      board.mark("x", 0);
+      board.mark("x", 3);
+      expect(intel.columnOpenFor("x", 6)).toEqual(42);
+    });
+
+    it ("should return 1 when the column has no opponent values", function() {
+      board.mark("x", 6);
+      expect(intel.columnOpenFor("x", 0)).toBeTruthy();
+    });
+
+    it ("should return 0 when the column has opponent values", function() {
+      board.mark("o", 6);
+      expect(intel.columnOpenFor("x", 0)).toBeFalsy();
+    });
+  });
+
+  describe("#diagonalsOpenFor", function() {
+    it ("should return 84 for a double-winning diagonal", function() {
+      board.mark("x", 0);
+      board.mark("x", 2);
+      board.mark("x", 6);
+      board.mark("x", 8);
+      expect(intel.diagonalsOpenFor("x", 4)).toEqual(84);
+    });
+
+    it ("should return 2 when the diagonals have no opponent values", function() {
+      board.mark("x", 4);
+      expect(intel.diagonalsOpenFor("x", 4)).toEqual(2);
+    });
+
+    it ("should return 1 when a diagonal has 1 opponent values", function() {
+      board.mark("o", 6);
+      expect(intel.diagonalsOpenFor("x", 4)).toEqual(1);
+    });
+
+    it ("should return 0 when the cell isn't on a diagonal", function() {
+      board.mark("x", 1);
+      expect(intel.diagonalsOpenFor("x", 1)).toEqual(0);
+    });
+  });
+
   describe("#rowBlockFor", function() {
     it ("should return 42 when it blocks a win", function() {
       board.mark("o", 1);
@@ -128,68 +189,6 @@ describe("Intelligence", function() {
 
     it ("should return 0 when the diagonals has no opponent values", function() {
       expect(intel.diagonalsBlockFor("x", 0)).toEqual(0);
-    });
-  });
-
-
-  describe("#rowOpenFor", function() {
-    it ("should return 42 for a winning row", function() {
-      board.mark("x", 0);
-      board.mark("x", 1);
-      expect(intel.rowOpenFor("x", 2)).toEqual(42);
-    });
-
-    it ("should return 1 when the row has no opponent values", function() {
-      board.mark("x", 2);
-      expect(intel.rowOpenFor("x", 0)).toEqual(1);
-    });
-
-    it ("should return 0 when the row has opponent values", function() {
-      board.mark("o", 2);
-      expect(intel.rowOpenFor("x", 0)).toEqual(0);
-    });
-  });
-
-  describe("#columnOpenFor", function() {
-    it ("should return 42 for a winning column", function() {
-      board.mark("x", 0);
-      board.mark("x", 3);
-      expect(intel.columnOpenFor("x", 6)).toEqual(42);
-    });
-
-    it ("should return 1 when the column has no opponent values", function() {
-      board.mark("x", 6);
-      expect(intel.columnOpenFor("x", 0)).toBeTruthy();
-    });
-
-    it ("should return 0 when the column has opponent values", function() {
-      board.mark("o", 6);
-      expect(intel.columnOpenFor("x", 0)).toBeFalsy();
-    });
-  });
-
-  describe("#diagonalsOpenFor", function() {
-    it ("should return 84 for a double-winning diagonal", function() {
-      board.mark("x", 0);
-      board.mark("x", 2);
-      board.mark("x", 6);
-      board.mark("x", 8);
-      expect(intel.diagonalsOpenFor("x", 4)).toEqual(84);
-    });
-
-    it ("should return 2 when the diagonals have no opponent values", function() {
-      board.mark("x", 4);
-      expect(intel.diagonalsOpenFor("x", 4)).toEqual(2);
-    });
-
-    it ("should return 1 when a diagonal has 1 opponent values", function() {
-      board.mark("o", 6);
-      expect(intel.diagonalsOpenFor("x", 4)).toEqual(1);
-    });
-
-    it ("should return 0 when the cell isn't on a diagonal", function() {
-      board.mark("x", 1);
-      expect(intel.diagonalsOpenFor("x", 1)).toEqual(0);
     });
   });
 });

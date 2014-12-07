@@ -5,6 +5,7 @@ describe("Board", function() {
   beforeEach(function() {
     board = new Board();
     xox = ["x", "o", "x"];
+    empty = [null, null, null];
   });
 
   describe("board", function() {
@@ -17,6 +18,65 @@ describe("Board", function() {
     it ("should mark a cell", function() {
       board.mark("x", 0);
       expect(board.cells[0]).toEqual("x");
+    });
+  });
+
+  describe("#rows", function() {
+    it ("should return the rows for the board", function() {
+      board.mark("x", 0);
+      board.mark("o", 1);
+      board.mark("x", 2);
+      board.mark("x", 6);
+      board.mark("o", 7);
+      board.mark("x", 8);
+      expect(board.rows()).toEqual([xox, empty, xox]);
+    });
+  });
+
+  describe("#columns", function() {
+    it ("should return the columns for the board", function() {
+      board.mark("x", 0);
+      board.mark("o", 3);
+      board.mark("x", 6);
+      board.mark("x", 2);
+      board.mark("o", 5);
+      board.mark("x", 8);
+      expect(board.columns()).toEqual([xox, empty, xox]);
+    });
+  });
+
+  describe("#diagonals", function() {
+    it ("should return the columns for the board", function() {
+      board.mark("x", 0);
+      board.mark("o", 4);
+      board.mark("x", 8);
+      board.mark("x", 2);
+      board.mark("x", 6);
+      expect(board.diagonals()).toEqual([xox, xox]);
+    });
+  });
+
+  describe("#full", function() {
+    it ("should return true for a filled board", function() {
+      board.mark("x", 0);
+      board.mark("o", 1);
+      board.mark("x", 2);
+      board.mark("x", 3);
+      board.mark("o", 4);
+      board.mark("x", 5);
+      board.mark("x", 6);
+      board.mark("o", 7);
+      board.mark("x", 8);
+      expect(board.full()).toBeTruthy();
+    });
+  });
+
+  describe("#winner", function() {
+    it ("should return the winner's symbol", function() {
+      board.mark("x", 0);
+      board.mark("x", 1);
+      board.mark("x", 2);
+      expect(board.winner()).toEqual("x");
     });
   });
 
