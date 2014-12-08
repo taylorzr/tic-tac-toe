@@ -1,7 +1,7 @@
 var readline = require("readline");
-var Board = require("./src/Board");
-var Intelligence = require("./src/Intelligence");
-var TerminalView = require("./src/TerminalView");
+var Board = require("./js/Board");
+var Intelligence = require("./js/Intelligence");
+var TerminalView = require("./js/TerminalView");
 
 function Game(view) {
   this.board = new Board();

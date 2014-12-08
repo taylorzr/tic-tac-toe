@@ -3,7 +3,6 @@ function Intelligence(board) {
 }
 
 Intelligence.prototype.bestCellFor = function(symbol) {
-  debugger;
   var ratings = this.board.cells.map(function(cellValue, cellIndex) {
     if (cellValue != null) return null;
     return this.openRatingFor(symbol, cellIndex) + this.blockRatingFor(symbol, cellIndex);
@@ -55,7 +54,6 @@ Intelligence.prototype.diagonalsBlockFor = function(symbol, cellIndex) {
 
 Intelligence.prototype.rowOpenFor = function(symbol, cellIndex) {
   var rowValues = this.board.rowForCell(cellIndex);
-  debugger;
   return this.lineOpenFor(symbol, rowValues);
 }
 
