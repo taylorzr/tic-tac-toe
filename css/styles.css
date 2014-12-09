@@ -1,16 +1,25 @@
 .container {
-  width: 250px;
+  width: 350px;
   margin: 0px auto;
-  background-color: grey;
+}
+
+h1 {
+  font-size: 48px;
+  font-family: "Helvetica Neue", Helvetica, Sans-serif;
+  text-align: center;
 }
 
 table {
   border-collapse: collapse;
+  margin: 0px auto;
 }
 
 td {
   border: 3px solid black;
-  padding: 10px;
+  padding: 5px;
+  width: 90px;
+  height: 105px;
+  text-align: center;
 }
 
 tr:first-child > td {
