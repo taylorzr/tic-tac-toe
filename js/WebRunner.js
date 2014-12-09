@@ -13,6 +13,7 @@ Game.prototype.reset = function() {
 }
 
 Game.prototype.playRound = function(cellIndex) {
+  if (this.board.cells[cellIndex]) return null;
   this.board.mark("x", cellIndex);
   this.board.mark("o", this.intel.bestCellFor("o"));
   this.show();
