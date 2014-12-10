@@ -57,7 +57,6 @@ Board.prototype.full = function() {
 
 Board.prototype.winner = function() {
   var symbol = null;
-  debugger;
   this.lines().forEach(function(line) {
     if (this.filledWith("x", line)) {
       symbol = "x";
