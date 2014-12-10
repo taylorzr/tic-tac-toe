@@ -59,6 +59,15 @@ describe("Intelligence", function() {
       expect(intel.blockRatingFor("x", 4)).toEqual(0);
     });
   });
+  
+  describe("#specialRatingFor", function() {
+    it ("should return 42 when the opponent has marked opposite corners", function() {
+      board.mark("x", 0);
+      board.mark("o", 4);
+      board.mark("x", 8);
+      expect(intel.specialRatingFor("o", 1)).toEqual(42);
+    });
+  });
 
   describe("#rowOpenFor", function() {
     it ("should return 42 for a winning row", function() {

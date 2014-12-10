@@ -5,9 +5,24 @@ function Intelligence(board) {
 Intelligence.prototype.bestCellFor = function(symbol) {
   var ratings = this.board.cells.map(function(cellValue, cellIndex) {
     if (cellValue != null) return null;
-    return this.openRatingFor(symbol, cellIndex) + this.blockRatingFor(symbol, cellIndex);
+    return this.openRatingFor(symbol, cellIndex) + this.blockRatingFor(symbol, cellIndex) + this.specialRatingFor(symbol, cellIndex);;
   }, this);
   return ratings.indexOf(Math.max.apply(null, ratings));
+}
+
+Intelligence.prototype.specialRatingFor = function(symbol, cellIndex) {
+  var specialCells = [1, 3, 5, 7];
+  if (specialCells.indexOf(cellIndex) == -1) return 0;
+  var oppositeCorners = [[this.board.cells[0], this.board.cells[8]], [this.board.cells[2], this.board.cells[6]]];
+  var dangerBlocked = specialCells.some(function(index) {
+    return this.board.cells[index] == symbol;
+  }, this);
+  var danger = oppositeCorners.some(function(oppositeCorner) {
+    return oppositeCorner.every(function(corner) {
+      return corner != null && corner != symbol;
+    });
+  });
+  return (!dangerBlocked && danger) ? 42 : 0;
 }
 
 Intelligence.prototype.openRatingFor = function(symbol, cellIndex) {
