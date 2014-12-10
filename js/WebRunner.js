@@ -1,4 +1,4 @@
-function Game(view) {
+function Game() {
 }
 
 Game.prototype.show = function() {
@@ -41,5 +41,4 @@ $(function() {
     var cellIndex = $(this).data("cell-index");
     game.playRound(cellIndex)
   });
-
 });

@@ -3,10 +3,10 @@ var Board = require("./js/Board");
 var Intelligence = require("./js/Intelligence");
 var TerminalView = require("./js/TerminalView");
 
-function Game(view) {
+function Game() {
   this.board = new Board();
   this.intel = new Intelligence(this.board);
-  this.view = view || new TerminalView(this.board);
+  this.view = new TerminalView(this.board);
 }
 
 Game.prototype.show = function() {
